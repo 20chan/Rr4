@@ -65,8 +65,8 @@ namespace ㄹ
         private int nextX()
         {
             int x = _direction * 20 + label1.Location.X;
-            if (x <= 0) return 0;
-            if (x >= Width - label1.Width) return Width - label1.Width;
+            if (x <= 0) { _direction = -_direction; return 0; }
+            if (x >= Width - label1.Width) { _direction = -_direction; return Width - label1.Width; }
             return x;
         }
 
