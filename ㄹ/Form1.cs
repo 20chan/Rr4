@@ -41,7 +41,7 @@ namespace ㄹ
             };
             tan.MouseDown += WowMouseDown;
             tan.Location = new Point(_random.Next(Width), 0);
-
+            
             _tans.Add(tan);
 
             return tan;
@@ -51,8 +51,10 @@ namespace ㄹ
         {
             _wait.Set();
             timer1.Stop();
+            timer2.Stop();
+            timer3.Stop();
             label2.Visible = true;
-            MessageBox.Show("당신은 탄핵당햇습니다!");
+            MessageBox.Show("당신은 탄핵당햇습니다! 사실 어차피 될 운명이었으니 그냥 받아들이는건 어떨까요");
             move.Abort();
         }
 
@@ -85,7 +87,7 @@ namespace ㄹ
                             GameOver();
                         }
 
-                        tan.Location = new Point(tan.Location.X, tan.Location.Y + 10);
+                        tan.Location = new Point(tan.Location.X, tan.Location.Y + level * 10);
                         if (tan.Location.Y > Height)
                         {
                             this.Controls.Remove(tan);
@@ -93,7 +95,7 @@ namespace ㄹ
                         }
                     }
                     _wait.Set();
-                    label1.Location = new Point(nextX(), label1.Location.Y);
+                    label1.Location = new Point(nextX(), Height - label1.Height - 50);
                     Thread.Sleep(50);
                 }
             }
@@ -108,6 +110,20 @@ namespace ㄹ
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             move.Abort();
+        }
+
+        private int level = 1;
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            timer1.Interval = (int)(timer1.Interval * 0.75);
+            this.Text = $"Now level {++level}";
+        }
+
+        private int score = 0;
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            score += level * 10;
+            this.label3.Text = $"얼굴 두께 : {score}mm";
         }
     }
 }
